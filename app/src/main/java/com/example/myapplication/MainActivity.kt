@@ -26,6 +26,7 @@ import androidx.compose.material3.Button
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.ui.text.input.KeyboardType
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,5 +51,44 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Birth(m: Modifier){
+    var userName by remember { mutableStateOf("劉伊宸")}
+    var userWeight by remember { mutableStateOf(3800)}
+    var userPassword by remember { mutableStateOf("")}
+    Column {
+        TextField(
+            value = userName,
+            onValueChange = { newText ->
+                userName = newText
+            },
+            modifier = m,
+            label = { Text("姓名") },
+            placeholder = { Text("請輸入您的姓名") }
+        )
+        TextField(
+            value = userWeight.toString(),
+            onValueChange = { newText ->
+                if (newText == ""){
+                    userWeight = 0
+                }
+                else{userWeight = newText.toInt()}
+            },
+            label = { Text("出生體重") },
+            keyboardOptions = KeyboardOptions
+                (keyboardType = KeyboardType.Number)
+        )
 
+        TextField(
+            value = userPassword,
+            onValueChange = { newText ->
+                userPassword = newText
+            },
+            label = { Text("密碼") },
+            placeholder = { Text(text = "請輸入您的密碼") },
+            visualTransformation = PasswordVisualTransformation(),
+            keyboardOptions = KeyboardOptions
+                (keyboardType = KeyboardType.Password)
+        )
+            Text("您輸入的姓名是：$userName\n出生體重為：$userWeight 公克"+ "\n密碼：$userPassword")
+
+    }
 }
